@@ -29,6 +29,7 @@ class Profile {
         ])
 
         socket.on('message', (message) => {
+            message = JSON.parse(message)
             switch (message[0]) {
                 case "Message": 
                     this.Message(message[1])
@@ -44,6 +45,9 @@ class Profile {
         })
 
         this.socket = socket
+    }
+    Send(object) {
+        this.socket.send(JSON.stringify(object))
     }
     LogIn(name) {
         
