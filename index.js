@@ -78,5 +78,5 @@ class Profile {
     
 }
 server.on('connection', (socket) => {
-    profile = new Profile(socket)
+    var profile = new Profile(socket)
 })
