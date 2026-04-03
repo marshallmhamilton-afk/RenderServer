@@ -23,10 +23,10 @@ class Profile {
     socket = null
     constructor(socket) {
         console.log('Client connected');
-        socket.send({
-            "Type": "History",
-            "Value": chatHistory
-        })
+        socket.send([
+           "History",
+            chatHistory
+        ])
 
         socket.on('message', (message) => {
             switch (message.Type) {
@@ -54,13 +54,13 @@ class Profile {
         idnumber++
     }
     Message(text) {
-        chatHistory.push(
-            {'Type': "ProfileMessage",
-                'Value': {
-                    'Sender': [this.name, this.id],
-                    'Text': text
-                 }
-        })
+        // chatHistory.push(
+        //     ["ProfileMessage",
+        //     'Value': {
+        //             'Sender': [this.name, this.id],
+        //             'Text': text
+        //          }
+        // ])
         for (const [key, value] of Object.entries(Profile.Profiles)) {
             Profile.socket.send({
                 'Type': "ProfileMessage",
