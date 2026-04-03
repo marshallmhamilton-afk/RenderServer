@@ -29,12 +29,12 @@ class Profile {
         ])
 
         socket.on('message', (message) => {
-            switch (message.Type) {
+            switch (message[0]) {
                 case "Message": 
-                    this.Message(message.Value)
+                    this.Message(message[1])
                     break
-                case "LogIn":
-                    this.l
+                
+                    
 
                 
             }
@@ -54,21 +54,21 @@ class Profile {
         idnumber++
     }
     Message(text) {
-        // chatHistory.push(
-        //     ["ProfileMessage",
-        //     'Value': {
-        //             'Sender': [this.name, this.id],
-        //             'Text': text
-        //          }
-        // ])
+        chatHistory.push(
+            ["ProfileMessage",
+                [
+                    [this.name, this.id],
+                    text
+                ]
+            ])
         for (const [key, value] of Object.entries(Profile.Profiles)) {
-            Profile.socket.send({
-                'Type': "ProfileMessage",
-                'Value': {
-                    'Sender': [this.name, this.id],
-                    'Text': text
-                 }
-            })
+            Profile.socket.send([
+                "ProfileMessage",
+                [
+                    [this.name, this.id],
+                    text
+                ]
+            ])
         }
     }
     LogOut() {
