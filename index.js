@@ -23,12 +23,9 @@ class Profile {
     socket = null
     constructor(socket) {
         console.log('Client connected');
-        socket.send([
-           "History",
-            chatHistory
-        ])
+        this.socket = socket
 
-        socket.on('message', (message) => {
+        this.socket.on('message', (message) => {
             message = JSON.parse(message)
             switch (message[0]) {
                 case "Message": 
@@ -40,14 +37,19 @@ class Profile {
                 
             }
         })
-        socket.on('close', () => {
+        this.socket.on('close', () => {
             console.log('Client disconnected');
         })
 
-        this.socket = socket
+        
+        this.Send([
+           "History",
+            chatHistory
+        ])
     }
     Send(object) {
         this.socket.send(JSON.stringify(object))
+        
     }
     LogIn(name) {
         
@@ -66,7 +68,7 @@ class Profile {
                 ]
             ])
         for (const [key, value] of Object.entries(Profile.Profiles)) {
-            Profile.socket.send([
+            value.Send([
                 "ProfileMessage",
                 [
                     [this.name, this.id],
