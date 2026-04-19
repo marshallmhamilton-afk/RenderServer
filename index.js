@@ -72,11 +72,11 @@ class Profile {
     }
     LogIn(name) {
         
-        this.id = toString(idnumber)
+        this.id = toString(Profile.idnumber)
         this.name = name
         this.loggedIn = true
-        Profile.Profiles[toString(idnumber)] = this
-        idnumber++
+        Profile.Profiles[name] = this
+        Profile.idnumber++
     }
     Message(text) {
         if (!this.loggedIn) {return}
