@@ -20,7 +20,7 @@ const date = {
         const day = d.getDate()
         const hours = d.getHours()
         var mins = d.getHours()
-        if (length(mins.toString()) === 1) {
+        if ((mins.toString().length) === 1) {
             mins = '0'+mins
         }
         return day+"/"+month+"/"+year+" "+hours+":"+mins
