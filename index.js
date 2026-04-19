@@ -12,6 +12,21 @@ var chatHistory = [
     // }
 ]
 
+const date = {
+    "getCurrentDate": function() {
+        const d = new Date()
+        const year = d.getFullYear()
+        const month = d.getMonth()
+        const day = d.getDate()
+        const hours = d.getHours()
+        var mins = d.getHours()
+        if (length(mins.toString()) === 1) {
+            mins = '0'+mins
+        }
+        return day+"/"+month+"/"+year+" "+hours+":"+mins
+    }
+}
+
 class Profile {
     static idnumber = 0
     static Profiles = {
@@ -31,7 +46,12 @@ class Profile {
                 case "Message": 
                     this.Message(message[1])
                     break
-                
+                case "LogIn":
+                    if (!Profiles[message[1]]){
+                        this.Send("LoggedIn")
+                        this.loggedIn = true
+                    }
+
                     
 
                 
@@ -39,6 +59,7 @@ class Profile {
         })
         this.socket.on('close', () => {
             console.log('Client disconnected');
+            this.LogOut()
         })
 
         
@@ -60,21 +81,19 @@ class Profile {
         idnumber++
     }
     Message(text) {
-        chatHistory.push(
-            ["ProfileMessage",
-                [
-                    [this.name, this.id],
-                    text
-                ]
-            ])
+        
+        const msg = [
+            "ProfileMessage",
+            [
+                [this.name,this.id,date.getCurrentDate()],
+                text
+            ]
+        ]
+        chatHistory.push(msg)
         for (const [key, value] of Object.entries(Profile.Profiles)) {
-            value.Send([
-                "ProfileMessage",
-                [
-                    [this.name, this.id],
-                    text
-                ]
-            ])
+            if (value === this) {continue}
+            
+            value.Send(msg)
         }
     }
     LogOut() {
