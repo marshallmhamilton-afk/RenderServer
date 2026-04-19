@@ -48,7 +48,7 @@ class Profile {
                     break
                 case "LogIn":
                     if (!Profiles[message[1]]){
-                        this.Send("LoggedIn")
+                        this.Send(["LoggedIn"])
                         console.log("new login: "+message[1])
                         this.LogIn(message[1])
                     }
