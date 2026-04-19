@@ -49,11 +49,9 @@ class Profile {
                 case "LogIn":
                     if (!Profiles[message[1]]){
                         this.Send("LoggedIn")
-                        this.loggedIn = true
+                        console.log("new login: "+message[1])
+                        this.LogIn(message[1])
                     }
-
-                    
-
                 
             }
         })
@@ -81,7 +79,7 @@ class Profile {
         idnumber++
     }
     Message(text) {
-        
+        if (!this.loggedIn) {return}
         const msg = [
             "ProfileMessage",
             [
@@ -97,7 +95,9 @@ class Profile {
         }
     }
     LogOut() {
+
         if (!this.loggedIn) {return}
+        this.loggedIn = false
         Profile.Profiles[this.id] = null
     }
     
