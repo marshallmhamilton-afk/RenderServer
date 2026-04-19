@@ -52,6 +52,8 @@ class Profile {
                         console.log("new login: "+message[1])
                         this.LogIn(message[1])
                     }
+                    break
+                
                 
             }
         })
