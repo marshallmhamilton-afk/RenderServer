@@ -89,7 +89,12 @@ class Profile {
                 text
             ]
         ]
-        chatHistory.push(msg)
+        chatHistory.push(
+            [
+                [this.name,this.id,date.getCurrentDate()],
+                text
+            ]
+        )
         for (const [key, value] of Object.entries(Profile.Profiles)) {
             if (value === this) {continue}
             
