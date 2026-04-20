@@ -96,7 +96,7 @@ class Profile {
             ]
         )
         for (const [key, value] of Object.entries(Profile.Profiles)) {
-            if (value === this) {continue}
+            if (value === this || value === null) {continue}
             
             value.Send(msg)
         }
