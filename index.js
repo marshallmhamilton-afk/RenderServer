@@ -12,21 +12,6 @@ var chatHistory = [
     // }
 ]
 
-const date = {
-    "getCurrentDate": function() {
-        const d = new Date()
-        const year = d.getFullYear()
-        const month = d.getMonth()
-        const day = d.getDate()
-        const hours = d.getHours()
-        var mins = d.getHours()
-        if ((mins.toString().length) === 1) {
-            mins = '0'+mins
-        }
-        return day+"/"+month+"/"+year+" "+hours+":"+mins
-    }
-}
-
 class Profile {
     static idnumber = 0
     static Profiles = {
@@ -44,7 +29,7 @@ class Profile {
             message = JSON.parse(message)
             switch (message[0]) {
                 case "Message": 
-                    this.Message(message[1])
+                    this.Message(message[1],message[2])
                     break
                 case "LogIn":
                     if (!Object.values(Profile.Profiles).indexOf(message[1]) > -1){
@@ -53,7 +38,9 @@ class Profile {
                         this.LogIn(message[1])
                     }
                     break
-                
+                case "Ping":
+                    console.log("server online!")
+                    break
                 
             }
         })
@@ -80,18 +67,18 @@ class Profile {
         Profile.Profiles[name] = this
         Profile.idnumber++
     }
-    Message(text) {
+    Message(text,date) {
         if (!this.loggedIn) {return}
         const msg = [
             "ProfileMessage",
             [
-                [this.name,this.id,date.getCurrentDate()],
+                [this.name,this.id,date],
                 text
             ]
         ]
         chatHistory.push(
             [
-                [this.name,this.id,date.getCurrentDate()],
+                [this.name,this.id,date],
                 text
             ]
         )
